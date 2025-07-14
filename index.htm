@@ -37,13 +37,25 @@
     user-select: none;
     border: none;
     box-shadow: 0 0 8px #0077aa99;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.25s ease;
   }
-  .engine-btn.selected,
   .engine-btn:hover {
+    transform: scale(1.05);
+  }
+  .engine-btn.selected {
+    animation: glow 2s infinite alternate;
     background: #00aaff;
     color: #002233;
     box-shadow: 0 0 20px #00bbffaa;
+  }
+
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 8px #00bbffaa;
+    }
+    100% {
+      box-shadow: 0 0 20px #00bbffaa;
+    }
   }
 
   #lesson-container {
@@ -51,8 +63,9 @@
     border-radius: 20px;
     padding: 26px 36px;
     box-shadow: 0 0 25px #004a99cc inset;
-    min-height: 440px;
+    min-height: 480px;
     position: relative;
+    transition: opacity 0.3s ease;
   }
   #lesson-container:focus {
     outline: 2px solid #00aaffcc;
@@ -342,7 +355,7 @@ public class CameraFollow : MonoBehaviour {
             <li>Open the Unreal Editor and explore the interface 🖥️</li>
           </ul>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=8kfz-JUQQ8M" target="_blank" rel="noopener">📺 Unreal Setup Video</a>
+            <a href="https://www.youtube.com/watch?v=I9t0tOG5g-M" target="_blank" rel="noopener">📺 Unreal Setup Video</a>
             <a href="https://docs.unrealengine.com/en-US/GettingStarted/index.html" target="_blank" rel="noopener">📄 Official Docs</a>
           </div>`,
         quiz: null
@@ -414,22 +427,22 @@ public class CameraFollow : MonoBehaviour {
           options: [
             "OnComponentBeginOverlap",
             "OnActorHit",
-            "Event Tick",
-            "Begin Play"
+            "OnTick",
+            "OnStart"
           ],
           correctIndex: 0
         }
       },
       {
-        title: "Level 5: 🕹️ Package & Play",
+        title: "Level 5: 🕹️ Build and Package Your Game",
         content: `
           <ul>
-            <li>Go to File → Package Project and select platform</li>
-            <li>Build and run the packaged game</li>
-            <li>Test your game executable! 🎉</li>
+            <li>Go to File → Package Project</li>
+            <li>Choose your platform and build</li>
+            <li>Run the built executable to play your Unreal game! 🎉</li>
           </ul>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=dY27qwXYHzk" target="_blank" rel="noopener">📺 Packaging Tutorial</a>
+            <a href="https://www.youtube.com/watch?v=m3ZzT6r6uE8" target="_blank" rel="noopener">📺 Packaging Tutorial</a>
             <a href="https://docs.unrealengine.com/en-US/SharingAndReleasing/Packaging/index.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: null
@@ -441,272 +454,213 @@ public class CameraFollow : MonoBehaviour {
         title: "Level 0: 🚀 Setup Godot Engine",
         content: `
           <ul>
-            <li>Download Godot from <a href="https://godotengine.org/download" target="_blank" rel="noopener">official site</a> 🧱</li>
-            <li>Create a new project with 3D or 2D template 🎯</li>
-            <li>Explore the editor interface - Scene, Inspector, Node system 🕹️</li>
+            <li>Download <a href="https://godotengine.org/download" target="_blank" rel="noopener">Godot Engine</a> (latest stable) 🧱</li>
+            <li>Create a new 3D project and open the editor 🎯</li>
+            <li>Familiarize with the Scene, Inspector, and FileSystem panels 🔍</li>
           </ul>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=5b6Fr9gDEJ8" target="_blank" rel="noopener">📺 Setup & Overview</a>
-            <a href="https://docs.godotengine.org/en/stable/getting_started/step_by_step/index.html" target="_blank" rel="noopener">📄 Docs</a>
+            <a href="https://www.youtube.com/watch?v=FNmsTE3k4-g" target="_blank" rel="noopener">📺 Godot Setup & Overview</a>
+            <a href="https://docs.godotengine.org/en/stable/getting_started/step_by_step/index.html" target="_blank" rel="noopener">📄 Official Docs</a>
           </div>`,
         quiz: null
       },
       {
-        title: "Level 1: 🎨 Understand Scenes & Nodes",
+        title: "Level 1: 🎨 Understand the Godot Editor",
         content: `
           <ul>
-            <li>Godot uses a scene tree with Nodes 🧩</li>
-            <li>Each game object is a Node - Sprite, KinematicBody, Camera, etc.</li>
-            <li>Learn how to add, rename, and arrange nodes</li>
+            <li>Learn about Scenes, Nodes, Inspector, and Script editors 🧩</li>
+            <li>Drag and drop nodes to build your game hierarchy 🎮</li>
           </ul>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=ObfAqQzHeSY" target="_blank" rel="noopener">📺 Scene & Nodes Tutorial</a>
-            <a href="https://docs.godotengine.org/en/stable/tutorials/scene_system/index.html" target="_blank" rel="noopener">📄 Docs</a>
+            <a href="https://www.youtube.com/watch?v=QlElHhl8Zks" target="_blank" rel="noopener">📺 Editor Tutorial</a>
+            <a href="https://docs.godotengine.org/en/stable/tutorials/step_by_step/index.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: null
       },
       {
-        title: "Level 2: 🎮 Make Player Move with GDScript",
+        title: "Level 2: 🎮 Make a Player Move in Godot",
         content: `
-          <p>Attach this script to a KinematicBody node to move it with arrow keys:</p>
+          <p>Add this GDScript to your player node:</p>
           <pre><code>extends KinematicBody
 
-var speed = 5
+var speed = 10
 
 func _physics_process(delta):
-    var velocity = Vector3()
-    if Input.is_action_pressed("ui_right"):
-        velocity.x += 1
-    if Input.is_action_pressed("ui_left"):
-        velocity.x -= 1
-    if Input.is_action_pressed("ui_up"):
-        velocity.z -= 1
-    if Input.is_action_pressed("ui_down"):
-        velocity.z += 1
-
-    velocity = velocity.normalized() * speed
-    move_and_slide(velocity)
-          </code></pre>
+  var dir = Vector3.ZERO
+  if Input.is_action_pressed("ui_right"):
+    dir.x += 1
+  if Input.is_action_pressed("ui_left"):
+    dir.x -= 1
+  if Input.is_action_pressed("ui_down"):
+    dir.z += 1
+  if Input.is_action_pressed("ui_up"):
+    dir.z -= 1
+  dir = dir.normalized()
+  move_and_slide(dir * speed)
+</code></pre>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=XMq5kaCSK50" target="_blank" rel="noopener">📺 GDScript Player Movement</a>
-            <a href="https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/index.html" target="_blank" rel="noopener">📄 Docs</a>
+            <a href="https://www.youtube.com/watch?v=uy2DTqIxtWc" target="_blank" rel="noopener">📺 Movement Tutorial</a>
+            <a href="https://docs.godotengine.org/en/stable/tutorials/physics/kinematic_body.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: {
-          question: "❓ What function is used for frame-independent physics updates in Godot?",
+          question: "❓ What Godot function is used to move the player with collision detection?",
           options: [
-            "_physics_process",
-            "_process",
-            "_ready",
-            "_init"
+            "move_and_slide",
+            "translate",
+            "move_to",
+            "apply_force"
           ],
           correctIndex: 0
         }
       },
       {
-        title: "Level 3: 🔧 Add a Camera",
+        title: "Level 3: 🔧 Add a Camera Follow",
         content: `
-          <ul>
-            <li>Add a Camera node to your scene</li>
-            <li>Set it as current camera</li>
-            <li>Make it follow the player by scripting or using a CameraRig</li>
-          </ul>
+          <p>Attach a Camera node as child of the player and set its position.</p>
+          <p>You can also script it for smooth follow.</p>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=Txmv8eVtVXY" target="_blank" rel="noopener">📺 Camera Setup</a>
-            <a href="https://docs.godotengine.org/en/stable/tutorials/3d/cameras/index.html" target="_blank" rel="noopener">📄 Docs</a>
+            <a href="https://www.youtube.com/watch?v=ZuHymTw13lQ" target="_blank" rel="noopener">📺 Camera Follow</a>
+            <a href="https://docs.godotengine.org/en/stable/tutorials/2d/cameras.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: null
       },
       {
         title: "Level 4: 🎯 Detect Collisions",
         content: `
-          <p>Use collision shapes and signals to detect collisions:</p>
-          <ul>
-            <li>Add a CollisionShape node to your player</li>
-            <li>Connect the 'body_entered' signal to a function</li>
-            <li>Handle logic when collision occurs</li>
-          </ul>
+          <p>Use signals like <code>body_entered</code> to detect collisions:</p>
+          <pre><code>func _on_Area_body_entered(body):
+  print("Collided with: ", body.name)
+</code></pre>
           <div class="links">
-            <a href="https://www.youtube.com/watch?v=Ba5eA_tZ86E" target="_blank" rel="noopener">📺 Collision Detection</a>
-            <a href="https://docs.godotengine.org/en/stable/tutorials/physics/physics_introduction.html" target="_blank" rel="noopener">📄 Docs</a>
+            <a href="https://www.youtube.com/watch?v=vW9FNUcoKNM" target="_blank" rel="noopener">📺 Collision Tutorial</a>
+            <a href="https://docs.godotengine.org/en/stable/tutorials/physics/areas.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: {
-          question: "❓ Which Godot node is required to detect physics collisions?",
+          question: "❓ Which node is commonly used for detecting collision areas in Godot?",
           options: [
-            "CollisionShape",
+            "Area",
             "Sprite",
             "Camera",
-            "AudioStreamPlayer"
+            "Timer"
           ],
           correctIndex: 0
         }
       },
       {
-        title: "Level 5: 🕹️ Export Your Game",
+        title: "Level 5: 🕹️ Export & Play Your Game",
         content: `
           <ul>
-            <li>Go to Project → Export and add a platform (Windows, Linux, etc.)</li>
-            <li>Configure export settings and click Export Project</li>
-            <li>Run your exported game executable!</li>
+            <li>Go to Project → Export and select your platform</li>
+            <li>Export the game executable</li>
+            <li>Run your exported game and enjoy! 🎉</li>
           </ul>
           <div class="links">
-            <a href="https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html" target="_blank" rel="noopener">📄 Export Docs</a>
-            <a href="https://www.youtube.com/watch?v=Q_3VKz72PZ8" target="_blank" rel="noopener">📺 Export Tutorial</a>
+            <a href="https://www.youtube.com/watch?v=3Taj2_rO6pE" target="_blank" rel="noopener">📺 Export Tutorial</a>
+            <a href="https://docs.godotengine.org/en/stable/tutorials/export/index.html" target="_blank" rel="noopener">📄 Docs</a>
           </div>`,
         quiz: null
       }
     ]
   };
 
-  // --- State ---
+  const engineButtons = document.querySelectorAll('.engine-btn');
+  const lessonContainer = document.getElementById('lesson-container');
+
   let currentEngine = null;
   let currentStep = 0;
 
-  // --- DOM refs ---
-  const lessonContainer = document.getElementById('lesson-container');
-  const engineButtons = document.querySelectorAll('.engine-btn');
-
-  // --- Text-to-Speech ---
-  let synth = window.speechSynthesis;
-  let narrationUtterance = null;
-
-  // --- Initialize ---
-  engineButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (narrationUtterance) {
-        synth.cancel();
-      }
-      engineButtons.forEach(b => {
-        b.classList.remove('selected');
-        b.setAttribute('aria-selected', 'false');
-        b.tabIndex = -1;
-      });
-      btn.classList.add('selected');
-      btn.setAttribute('aria-selected', 'true');
-      btn.tabIndex = 0;
-      currentEngine = btn.getAttribute('data-engine');
-      currentStep = 0;
-      renderLesson();
-      lessonContainer.focus();
-    });
-  });
-
   function renderLesson() {
-    const steps = lessons[currentEngine];
-    if (!steps) {
-      lessonContainer.innerHTML = '<p>Please select a game engine.</p>';
-      return;
-    }
-    const step = steps[currentStep];
-    let html = `
-      <div id="step-counter" aria-live="polite">Step ${currentStep + 1} of ${steps.length} - ${currentEngine.toUpperCase()}</div>
-      <h2>${step.title}</h2>
-      <div class="lesson-content">${step.content}</div>
-    `;
+    const lessonList = lessons[currentEngine];
+    if (!lessonList) return;
 
-    // Quiz if available
-    if (step.quiz) {
-      html += `
+    const lesson = lessonList[currentStep];
+
+    let quizHTML = "";
+    if (lesson.quiz) {
+      quizHTML = `
       <div class="quiz-container" role="region" aria-labelledby="quiz-question">
-        <div id="quiz-question" class="quiz-question">${step.quiz.question}</div>
-        <div class="quiz-options" role="list" tabindex="0">
-          ${step.quiz.options.map((opt, i) => `<div class="quiz-option" role="listitem" tabindex="0" data-index="${i}">${opt}</div>`).join('')}
+        <div class="quiz-question" id="quiz-question">${lesson.quiz.question}</div>
+        <div class="quiz-options" role="list">
+          ${lesson.quiz.options.map((opt, i) => `<button class="quiz-option" role="listitem" data-index="${i}" tabindex="0">${opt}</button>`).join('')}
         </div>
-        <div class="quiz-feedback" aria-live="polite"></div>
-      </div>
-      `;
+        <div class="quiz-feedback" aria-live="polite" aria-atomic="true"></div>
+      </div>`;
     }
 
-    html += `
-      <button id="narrate-btn" aria-label="Read lesson content aloud">🔊 Narrate Lesson</button>
-      <div class="nav-buttons" role="group" aria-label="Step navigation">
-        <button id="prev-step" ${currentStep === 0 ? 'disabled' : ''} aria-disabled="${currentStep === 0}">⬅️ Previous</button>
-        <button id="next-step" ${currentStep === steps.length -1 ? 'disabled' : ''} aria-disabled="${currentStep === steps.length -1}">Next ➡️</button>
+    lessonContainer.innerHTML = `
+      <div id="step-counter">Step ${currentStep + 1} / ${lessonList.length}</div>
+      <h2>${lesson.title}</h2>
+      <div>${lesson.content}</div>
+      ${quizHTML}
+      <div class="nav-buttons">
+        <button id="prev-btn" ${currentStep === 0 ? 'disabled' : ''} aria-label="Previous step">⬅️ Prev</button>
+        <button id="next-btn" ${currentStep === lessonList.length - 1 ? 'disabled' : ''} aria-label="Next step">Next ➡️</button>
       </div>
     `;
 
-    lessonContainer.innerHTML = html;
+    // Set focus on container for screen readers
+    lessonContainer.focus();
 
-    // Add quiz event listeners
-    if (step.quiz) {
+    if (lesson.quiz) {
       const options = lessonContainer.querySelectorAll('.quiz-option');
       const feedback = lessonContainer.querySelector('.quiz-feedback');
-      options.forEach(option => {
-        option.addEventListener('click', () => handleQuizClick(option, feedback, step.quiz.correctIndex));
-        option.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleQuizClick(option, feedback, step.quiz.correctIndex);
+      options.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const idx = parseInt(opt.dataset.index);
+          if (idx === lesson.quiz.correctIndex) {
+            feedback.textContent = "✅ Correct!";
+            opt.classList.add('correct');
+          } else {
+            feedback.textContent = "❌ Incorrect, try again.";
+            opt.classList.add('incorrect');
           }
+          // Disable all options after selection
+          options.forEach(button => button.disabled = true);
         });
       });
     }
 
-    // Narrate button listener
-    const narrateBtn = document.getElementById('narrate-btn');
-    narrateBtn.addEventListener('click', () => {
-      if (narrationUtterance) {
-        synth.cancel();
-        narrationUtterance = null;
-        narrateBtn.textContent = "🔊 Narrate Lesson";
-      } else {
-        const textToSpeak = stripHtml(step.title + ". " + step.content);
-        narrationUtterance = new SpeechSynthesisUtterance(textToSpeak);
-        narrationUtterance.rate = 1;
-        synth.speak(narrationUtterance);
-        narrateBtn.textContent = "⏹️ Stop Narration";
-        narrationUtterance.onend = () => {
-          narrationUtterance = null;
-          narrateBtn.textContent = "🔊 Narrate Lesson";
-        };
-      }
-    });
-
-    // Navigation buttons
-    document.getElementById('prev-step').addEventListener('click', () => {
+    document.getElementById('prev-btn').addEventListener('click', () => {
       if (currentStep > 0) {
         currentStep--;
-        if (narrationUtterance) synth.cancel();
         renderLesson();
       }
     });
-    document.getElementById('next-step').addEventListener('click', () => {
-      if (currentStep < steps.length -1) {
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentStep < lessonList.length - 1) {
         currentStep++;
-        if (narrationUtterance) synth.cancel();
         renderLesson();
       }
     });
   }
 
-  function handleQuizClick(option, feedback, correctIndex) {
-    // If already answered, ignore
-    if (feedback.textContent !== '') return;
+  function selectEngine(engine) {
+    currentEngine = engine;
+    currentStep = 0;
+    renderLesson();
 
-    const chosenIndex = parseInt(option.getAttribute('data-index'));
-    const options = option.parentElement.querySelectorAll('.quiz-option');
-
-    options.forEach((opt, i) => {
-      opt.classList.add(i === correctIndex ? 'correct' : 'incorrect');
-      opt.setAttribute('aria-disabled', 'true');
-      opt.tabIndex = -1;
+    engineButtons.forEach(btn => {
+      if (btn.dataset.engine === engine) {
+        btn.classList.add('selected');
+        btn.setAttribute('aria-selected', 'true');
+        btn.setAttribute('tabindex', '0');
+      } else {
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-selected', 'false');
+        btn.setAttribute('tabindex', '-1');
+      }
     });
-
-    if (chosenIndex === correctIndex) {
-      feedback.textContent = "✅ Correct! Well done.";
-      feedback.style.color = "#2ecc71";
-    } else {
-      feedback.textContent = "❌ Incorrect, try again next time.";
-      feedback.style.color = "#e74c3c";
-    }
   }
 
-  function stripHtml(html) {
-    // Remove HTML tags for narration text
-    let tmp = document.createElement("DIV");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
-  }
+  engineButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      selectEngine(button.dataset.engine);
+    });
+  });
 
+  // Optional: select first engine on page load
+  // selectEngine('unity');
 </script>
+
 </body>
 </html>
